@@ -1,0 +1,14 @@
+C:\Users\Admn\Documents\cse210-hw\bin\Debug\net8.0\cse210-hw.exe
+C:\Users\Admn\Documents\cse210-hw\bin\Debug\net8.0\cse210-hw.deps.json
+C:\Users\Admn\Documents\cse210-hw\bin\Debug\net8.0\cse210-hw.runtimeconfig.json
+C:\Users\Admn\Documents\cse210-hw\bin\Debug\net8.0\cse210-hw.dll
+C:\Users\Admn\Documents\cse210-hw\bin\Debug\net8.0\cse210-hw.pdb
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.AssemblyInfoInputs.cache
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.AssemblyInfo.cs
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.csproj.CoreCompileInputs.cache
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.dll
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\refint\cse210-hw.dll
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.pdb
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.genruntimeconfig.cache
+C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\ref\cse210-hw.dll

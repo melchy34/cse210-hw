@@ -12,3 +12,4 @@ C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\refint\cse210-hw.dll
 C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.pdb
 C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.genruntimeconfig.cache
 C:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\ref\cse210-hw.dll
+c:\Users\Admn\Documents\cse210-hw\obj\Debug\net8.0\cse210-hw.sourcelink.json

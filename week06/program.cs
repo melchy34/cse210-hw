@@ -1,103 +1,116 @@
-// Base class
-public abstract class Goal
-{
-    public string Description { get; set; }
-    public int Points { get; set; }
-    protected bool isComplete;
+import pickle
 
-    public Goal(string description, int points)
-    {
-        Description = description;
-        Points = points;
-        isComplete = false;
-    }
+# Base Class: Goal
+class Goal:
+    def __init__(self, name, description, score_value):
+        self._name = name
+        self._description = description
+        self._score_value = score_value
+        self._completed = False
+        self._score = 0
+    
+    def record_event(self):
+        """Record an event for the goal and update the score."""
+        pass
+    
+    def display(self):
+        """Display the goal details."""
+        pass
+    
+    @property
+    def score(self):
+        return self._score
 
-    public abstract void RecordEvent();
-    public abstract string GetDetailsString();
-    public abstract void DisplayGoal();
-}
+    @property
+    def name(self):
+        return self._name
+    
+    @property
+    def description(self):
+        return self._description
 
-// SimpleGoal class
-public class SimpleGoal : Goal
-{
-    public SimpleGoal(string description, int points) : base(description, points) { }
+# Derived Class: SimpleGoal
+class SimpleGoal(Goal):
+    def __init__(self, name, description, score_value):
+        super().__init__(name, description, score_value)
+    
+    def record_event(self):
+        """Mark the goal as completed and add the score."""
+        if not self._completed:
+            self._completed = True
+            self._score += self._score_value
+    
+    def display(self):
+        status = "[X]" if self._completed else "[ ]"
+        return f"{status} {self._name}: {self._description} | Score: {self._score}"
 
-    public override void RecordEvent()
-    {
-        isComplete = true;
-        Console.WriteLine($"You completed the goal! {Points} points awarded.");
-    }
+# Derived Class: EternalGoal
+class EternalGoal(Goal):
+    def __init__(self, name, description, score_value):
+        super().__init__(name, description, score_value)
+    
+    def record_event(self):
+        """Add points each time the goal is recorded."""
+        self._score += self._score_value
+    
+    def display(self):
+        return f"[ ] {self._name}: {self._description} | Total Points: {self._score}"
 
-    public override string GetDetailsString()
-    {
-        return isComplete ? $"[X] {Description}" : $"[ ] {Description}";
-    }
+# Derived Class: ChecklistGoal
+class ChecklistGoal(Goal):
+    def __init__(self, name, description, score_value, target_count):
+        super().__init__(name, description, score_value)
+        self._target_count = target_count
+        self._current_count = 0
+        self._bonus_points = 500  # Bonus on completion
 
-    public override void DisplayGoal()
-    {
-        Console.WriteLine(GetDetailsString());
-    }
-}
+    def record_event(self):
+        """Increment the count and update the score."""
+        if self._current_count < self._target_count:
+            self._current_count += 1
+            self._score += self._score_value
+            if self._current_count == self._target_count:
+                self._score += self._bonus_points
 
-// EternalGoal class
-public class EternalGoal : Goal
-{
-    public int TimesCompleted { get; private set; }
+    def display(self):
+        return f"[ ] {self._name}: {self._description} | Completed {self._current_count}/{self._target_count} times | Score: {self._score}"
 
-    public EternalGoal(string description, int points) : base(description, points)
-    {
-        TimesCompleted = 0;
-    }
+# Goal Manager to handle user goals
+class GoalManager:
+    def __init__(self):
+        self._goals = []
+        self._total_score = 0
 
-    public override void RecordEvent()
-    {
-        TimesCompleted++;
-        Console.WriteLine($"You completed the eternal goal! {Points} points awarded.");
-    }
+    def add_goal(self, goal):
+        """Add a goal to the list."""
+        self._goals.append(goal)
+    
+    def record_goal_event(self, goal_name):
+        """Record an event for a specific goal."""
+        for goal in self._goals:
+            if goal.name == goal_name:
+                goal.record_event()
+                self._total_score += goal.score
+                break
+    
+    def display_goals(self):
+        """Display all goals and their current status."""
+        for goal in self._goals:
+            print(goal.display())
+    
+    def display_score(self):
+        """Display the total score of the user."""
+        print(f"Total Score: {self._total_score}")
 
-    public override string GetDetailsString()
-    {
-        return $"Eternal goal: {Description} [{TimesCompleted} times recorded]";
-    }
+    def save_goals(self, filename="goals.pkl"):
+        """Save goals and score to a file."""
+        with open(filename, "wb") as file:
+            pickle.dump((self._goals, self._total_score), file)
 
-    public override void DisplayGoal()
-    {
-        Console.WriteLine(GetDetailsString());
-    }
-}
-
-// ChecklistGoal class
-public class ChecklistGoal : Goal
-{
-    public int Target { get; set; }
-    public int TimesCompleted { get; private set; }
-    public int Bonus { get; set; }
-
-    public ChecklistGoal(string description, int points, int target, int bonus) : base(description, points)
-    {
-        Target = target;
-        Bonus = bonus;
-        TimesCompleted = 0;
-    }
-
-    public override void RecordEvent()
-    {
-        TimesCompleted++;
-        int currentPoints = Points;
-        if (TimesCompleted == Target)
-        {
-            currentPoints += Bonus; // Award bonus points
-        }
-        Console.WriteLine($"You completed part of the checklist goal! {currentPoints} points awarded.");
-    }
-
-    public override string GetDetailsString()
-    {
-        return $"[ ] {Description} (Completed {TimesCompleted}/{Target} times)";
-    }
-
-    public override void DisplayGoal()
-    {
-        Console.WriteLine(GetDetailsString());
-    }
-}
+    def load_goals(self, filename="goals.pkl"):
+        """Load goals and score from a file."""
+        try:
+            with open(filename, "rb") as file:
+                self._goals, self._total_score = pickle.load(file)
+        except FileNotFoundError:
+            print("No saved goals found.")
